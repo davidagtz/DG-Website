@@ -40,6 +40,9 @@ nav#top_container
                 color: #fff
                 text-align: center
                 line-height: $nav_height
+                vertical-align: top
+                img
+                    height: inherit
             .separator
                 width: 1px
                 display: inline-block
@@ -51,3 +54,9 @@ nav#top_container
                 background-color: #30302f
             &:first-child
                 margin-left: 2* $li_pad
+
+#main_body
+    $mr: 5%
+    width: 100% - 2 * $mr
+    margin-left: $mr
+    margin-top: 10px

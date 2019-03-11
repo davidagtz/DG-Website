@@ -43,6 +43,10 @@ nav#top_container ul a li {
   color: #fff;
   text-align: center;
   line-height: 30px;
+  vertical-align: top;
+}
+nav#top_container ul a li img {
+  height: inherit;
 }
 nav#top_container ul a .separator {
   width: 1px;
@@ -57,4 +61,10 @@ nav#top_container ul a:hover {
 }
 nav#top_container ul a:first-child {
   margin-left: 10px;
+}
+
+#main_body {
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 10px;
 }
