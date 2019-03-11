@@ -2,27 +2,59 @@ html, body {
   margin: 0;
   font-family: Roboto;
 }
-html nav ul, body nav ul {
+
+nav#top_container {
+  background-color: #0f0f0f;
+  display: block;
+  height: 40px;
+}
+nav#top_container #logo {
+  display: inline-block;
+  background-color: #ffee00;
+  height: 45px;
+  width: 45px;
+  margin-left: 2%;
+}
+nav#top_container #logo h1 {
+  margin: 0;
+  text-align: right;
+  margin-top: 22.5px;
+  font-size: 20.25px;
+  margin-right: 2.25px;
+}
+nav#top_container ul {
   list-style-type: none;
   padding: 0;
-  background-color: #0f0f0f;
   margin: 0;
+  display: inline-block;
+  white-space: nowrap;
+  vertical-align: top;
 }
-html nav ul a, body nav ul a {
+nav#top_container ul a {
   margin: 0;
   padding: 0;
   display: inline-block;
 }
-html nav ul a li, body nav ul a li {
+nav#top_container ul a li {
+  height: 30px;
   margin: 0;
-  padding: 0;
   display: inline-block;
   padding: 5px;
   color: #fff;
+  text-align: center;
+  line-height: 30px;
 }
-html nav ul a:hover, body nav ul a:hover {
+nav#top_container ul a .separator {
+  width: 1px;
+  display: inline-block;
+  background-color: #777;
+  margin-top: 8px;
+  height: 24px;
+  vertical-align: top;
+}
+nav#top_container ul a:hover {
   background-color: #30302f;
 }
-html nav ul a:first-child, body nav ul a:first-child {
-  margin-left: 2%;
+nav#top_container ul a:first-child {
+  margin-left: 10px;
 }

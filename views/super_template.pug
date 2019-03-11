@@ -4,15 +4,19 @@ html
         link(href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet")
         block head
     body
-        #top_container
-            nav
-                ul
-                    a(href="/")
-                        li Home
-                    a(href="/projects")
-                        li Projects
-                    a(href="/aboutme")
-                        li About Me
-                    a(href="/contactme")
-                        li Contact Me
+        nav#top_container
+            #logo
+                h1 DG
+            ul
+                a(href="/")
+                    li Home
+                    .separator
+                a(href="/projects")
+                    li Projects
+                    .separator
+                a(href="/aboutme")
+                    li About Me
+                    .separator
+                a(href="/contactme")
+                    li Contact Me
         block body
