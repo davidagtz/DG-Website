@@ -1,0 +1,17 @@
+{
+  "name": "davidthedev",
+  "version": "0.0.1",
+  "description": "My personal developer website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "David Gutierrez",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "pug": "^2.0.3",
+    "sass": "^1.17.2"
+  }
+}
