@@ -68,3 +68,9 @@ nav#top_container ul a:first-child {
   margin-left: 5%;
   margin-top: 10px;
 }
+
+#footer {
+  display: block;
+  text-align: center;
+  color: #555;
+}

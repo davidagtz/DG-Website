@@ -7,19 +7,20 @@ const styles_path = index_path + "/styles"; // Folder for Sass templates
 
 // Compile Sass
 const sass = require("sass");
-const sass_files = ["main"];
+const sass_files = ["main", "aboutme"];
 sass_files.forEach(e => {
-  let result = sass.renderSync({
-    file: styles_path + "/" + e + ".sass"
-  });
-  if (result.err) throw result.err;
-  fs.writeFileSync(res_path + "/css/" + e + ".css", result.css);
+	let result = sass.renderSync({
+		file: styles_path + "/" + e + ".sass"
+	});
+	if (result.err) throw result.err;
+	fs.writeFileSync(res_path + "/css/" + e + ".css", result.css);
 });
 
 // Get Pug template engine
 const pug = require("pug");
 let default_views = {
-  index: pug.compileFile(views_path + "/index.pug")({})
+	index: pug.compileFile(views_path + "/index.pug")({}),
+	about_me: pug.compileFile(views_path + "/aboutme.pug")({})
 };
 
 // Express Declaration and Middleware
@@ -30,21 +31,27 @@ app.use("/", express.static(__dirname + "/res"));
 app.set("view engine", "pug");
 app.set("views", views_path);
 app.use((req, res, next) => {
-  sass_files.forEach(e => {
-    let result = sass.renderSync({
-      file: styles_path + "/" + e + ".sass"
-    });
-    if (result.err) throw result.err;
-    fs.writeFileSync(res_path + "/css/" + e + ".css", result.css);
-  });
-  next();
+	sass_files.forEach(e => {
+		let result = sass.renderSync({
+			file: styles_path + "/" + e + ".sass"
+		});
+		if (result.err) throw result.err;
+		fs.writeFileSync(res_path + "/css/" + e + ".css", result.css);
+	});
+	next();
 });
 
 // HTTP requests
 app.get("/", (req, res) => {
-  // res.status(200);
-  // res.send(default_views.index);
-  res.render("index", {});
+	// res.status(200);
+	// res.send(default_views.index);
+	res.render("index", {});
+});
+
+app.get("/aboutme", (req, res) => {
+	// res.status(200);
+	// res.send(default_views.index);
+	res.render("aboutme", {});
 });
 
 // Start Listening

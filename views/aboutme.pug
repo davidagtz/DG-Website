@@ -1,0 +1,31 @@
+extends super_template
+
+block head
+    link(rel="stylesheet" type="text/css" href="/css/aboutme.css")
+
+block body
+    #aboutme
+        h1 About Me
+        #abt
+            p Hey! I'm David Gutierrez. I currently attend Clements High School, and 
+             | I plan on attending the Univeristy of Texas at Dallas where I will pursue a
+             | degree in Computer Science. At Clements High School, I am:
+            ul
+                li Vice President of Habitat for Humanity
+                li Secretary of Spanish National Honor Society
+                li Contest Manager of Computer Science Club 
+            p Outside of school, I enjoy programming websites and applications. Through these
+             | projects, I've learned Node.js, Express, MongoDB, Java, Sass, C++, and LLVM. This very website can
+             | be found on the GitHub tab in the navbar. This website was built off of Node.js, Express, 
+             | MongoDB, Sass, and Pug.
+            ul#list
+                li <img src="/imgs/p_icons/cpp.png">
+                li <img src="/imgs/p_icons/express.png">
+                li <img src="/imgs/p_icons/java.png">
+                li <img src="/imgs/p_icons/llvm.jpeg">
+                li <img src="/imgs/p_icons/mongodb.png">
+                li <img src="/imgs/p_icons/node.png">
+                li <img src="/imgs/p_icons/pug.png">
+                li <img src="/imgs/p_icons/sass.png">
+        #abi
+            img#portrait(src="/imgs/portrait.jpg")
