@@ -1,9 +1,24 @@
 // Get several paths
 const fs = require("fs");
-let index_path = fs.realpathSync(".", { encoding: "utf8" }); // Path to this directory
-const res_path = index_path + "/res"; // Folder for html files and such
-const views_path = index_path + "/views"; // Folder for Pug templates
-const styles_path = index_path + "/styles"; // Folder for Sass templates
+const res_path = __dirname + "/res"; // Folder for html files and such
+const views_path = __dirname + "/views"; // Folder for Pug templates
+const styles_path = __dirname + "/styles"; // Folder for Sass templates
+
+// Mongo Client
+const MongoClient = require("mongodb").MongoClient;
+const config = JSON.parse(
+	fs.readFileSync("config.json", { encoding: "utf-8" })
+);
+const db_url =
+	"mongodb://" +
+	config.admin.user +
+	":" +
+	config.admin.pwd +
+	"@localhost:27017/DevWebsite";
+
+console.log(db_url);
+
+const db_name = "DevWebsite";
 
 // Compile Sass
 const sass = require("sass");
@@ -41,18 +56,22 @@ app.use((req, res, next) => {
 	next();
 });
 
-// HTTP requests
-app.get("/", (req, res) => {
-	// res.status(200);
-	// res.send(default_views.index);
-	res.render("index", {});
-});
+MongoClient.connect(db_url, { useNewUrlParser: true }, (err, client) => {
+	if (err) throw err;
 
-app.get("/aboutme", (req, res) => {
-	// res.status(200);
-	// res.send(default_views.index);
-	res.render("aboutme", {});
-});
+	// HTTP requests
+	app.get("/", (req, res) => {
+		// res.status(200);
+		// res.send(default_views.index);
+		res.render("index", {});
+	});
 
-// Start Listening
-app.listen(process.env.port || 80, () => console.log("Listening..."));
+	app.get("/aboutme", (req, res) => {
+		// res.status(200);
+		// res.send(default_views.index);
+		res.render("aboutme", {});
+	});
+
+	// Start Listening
+	app.listen(process.env.port || 80, () => console.log("Listening..."));
+});
