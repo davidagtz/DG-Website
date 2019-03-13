@@ -1,0 +1,18 @@
+extends super_template
+
+block head
+    link(rel="stylesheet" type="text/css" href="/css/projects.css")
+
+block body
+    h1 Project List
+    ul#pl
+        - for(let i=0; i < list.length; i++)
+            li
+                a(href=`${list[i].link}`)
+                    .project_item
+                        img(src=`${list[i].img}`)
+                        .text_box
+                            h2 #{list[i].name}
+                            p #{list[i].description}
+                    - if(i != list.length  - 1)
+                        .horizontal_separator

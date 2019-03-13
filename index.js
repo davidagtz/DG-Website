@@ -9,20 +9,20 @@ const MongoClient = require("mongodb").MongoClient;
 const config = JSON.parse(
 	fs.readFileSync("config.json", { encoding: "utf-8" })
 );
+const db_name = config.db;
 const db_url =
 	"mongodb://" +
 	config.admin.user +
 	":" +
 	config.admin.pwd +
-	"@localhost:27017/DevWebsite";
+	"@localhost:27017/" +
+	db_name;
 
 console.log(db_url);
 
-const db_name = "DevWebsite";
-
 // Compile Sass
 const sass = require("sass");
-const sass_files = ["main", "aboutme"];
+const sass_files = ["main", "aboutme", "projects"];
 sass_files.forEach(e => {
 	let result = sass.renderSync({
 		file: styles_path + "/" + e + ".sass"
@@ -35,7 +35,25 @@ sass_files.forEach(e => {
 const pug = require("pug");
 let default_views = {
 	index: pug.compileFile(views_path + "/index.pug")({}),
-	about_me: pug.compileFile(views_path + "/aboutme.pug")({})
+	about_me: pug.compileFile(views_path + "/aboutme.pug")({}),
+	projects: pug.compileFile(views_path + "/projects.pug")({
+		list: [
+			{
+				name: "Dia",
+				img: "/imgs/portrait.jpg",
+				description:
+					"dasd asd dsad efe qwdef asdf awdef w dwdad feadw dwad awdwd2ds awdwfa wdw3qew fasdasd dsadwedwqdwqdsad qwe ewqd qwdwqe dwqdqw",
+				link: "/aboutme"
+			},
+			{
+				name: "Dia",
+				img: "/imgs/portrait.jpg",
+				description:
+					"dasd asd dsad efe qwdef asdf awdef w dwdad feadw dwad awdwd2ds awdwfa wdw3qew fasdasd dsadwedwqdwqdsad qwe ewqd qwdwqe dwqdqw",
+				link: "/aboutme"
+			}
+		]
+	})
 };
 
 // Express Declaration and Middleware
@@ -70,6 +88,31 @@ MongoClient.connect(db_url, { useNewUrlParser: true }, (err, client) => {
 		// res.status(200);
 		// res.send(default_views.index);
 		res.render("aboutme", {});
+	});
+
+	app.get("/projects", (req, res) => {
+		res.render("projects", {
+			list: [
+				{
+					name: "Dia",
+					img: "/imgs/portrait.jpg",
+					description:
+						"dasd asd dsad efe qwdef asdf awdef w dwdad feadw dwad awdwd2ds awdwfa wdw3qew fasdasd dsadwedwqdwqdsad qwe ewqd qwdwqe dwqdqw",
+					link: "/aboutme"
+				},
+				{
+					name: "Dia",
+					img: "/imgs/portrait.jpg",
+					description:
+						"dasd asd dsad efe qwdef asdf awdef w dwdad feadw dwad awdwd2ds awdwfa wdw3qew fasdasd dsadwedwqdwqdsad qwe ewqd qwdwqe dwqdqw",
+					link: "/aboutme"
+				}
+			]
+		});
+	});
+
+	app.get("*", (req, res) => {
+		res.render("404", {});
 	});
 
 	// Start Listening

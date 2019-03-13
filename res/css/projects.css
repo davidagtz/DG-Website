@@ -1,0 +1,29 @@
+#pl {
+  list-style-type: none;
+}
+#pl li a {
+  text-decoration: none;
+  color: #000;
+}
+#pl li a img {
+  height: 8em;
+}
+#pl li a .text_box {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 1em;
+}
+#pl li a .text_box h2 {
+  margin: 0;
+  font-size: 2em;
+}
+#pl li a .text_box p {
+  font-size: 1em;
+}
+#pl li .horizontal_separator {
+  height: 1px;
+  background-color: #999;
+  display: block;
+  margin-bottom: 0.7em;
+  margin-top: 0.7em;
+}
