@@ -1,3 +1,39 @@
+#title_p {
+  display: block;
+}
+#title_p h1 {
+  display: inline-block;
+  font-size: 2em;
+}
+#title_p a {
+  margin-top: 1.965em;
+  margin-left: 0.67em;
+  height: 0.75em;
+  display: inline-block;
+  vertical-align: top;
+}
+#title_p a #plus {
+  display: inline-block;
+  width: 0.75em;
+  height: 0.75em;
+}
+#title_p a #plus * {
+  display: inline-block;
+  position: absolute;
+}
+#title_p a #plus #up {
+  width: 0.25em;
+  height: 0.75em;
+  background-color: #999;
+  margin-left: 0.25em;
+}
+#title_p a #plus #side {
+  height: 0.25em;
+  margin-top: 0.25em;
+  width: 0.75em;
+  background-color: #999;
+}
+
 #pl {
   list-style-type: none;
 }

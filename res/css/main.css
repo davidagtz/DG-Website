@@ -77,6 +77,7 @@ nav#top_container ul li:hover .dropdown {
   display: block;
   position: absolute;
   padding: 0;
+  z-index: 1;
 }
 nav#top_container ul li:hover .dropdown li {
   display: block;

@@ -4,7 +4,12 @@ block head
     link(rel="stylesheet" type="text/css" href="/css/projects.css")
 
 block body
-    h1 Project List
+    #title_p
+        h1 Project List
+        a(href="/projects/add")
+            #plus
+                #up
+                #side
     ul#pl
         - for(let i=0; i < list.length; i++)
             li

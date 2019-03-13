@@ -22,7 +22,7 @@ console.log(db_url);
 
 // Compile Sass
 const sass = require("sass");
-const sass_files = ["main", "aboutme", "projects"];
+const sass_files = ["main", "aboutme", "projects", "signin"];
 sass_files.forEach(e => {
 	let result = sass.renderSync({
 		file: styles_path + "/" + e + ".sass"
@@ -53,7 +53,9 @@ let default_views = {
 				link: "/aboutme"
 			}
 		]
-	})
+	}),
+	404: pug.compileFile(views_path + "/404.pug", {}),
+	signin: pug.compileFile(views_path + "/signin.pug", {})
 };
 
 // Express Declaration and Middleware
@@ -109,6 +111,14 @@ MongoClient.connect(db_url, { useNewUrlParser: true }, (err, client) => {
 				}
 			]
 		});
+	});
+
+	app.get("/signin", (req, res) => {
+		res.render("signin", {});
+	});
+
+	app.get("/projects/add", (req, res) => {
+		res.redirect("/signin");
 	});
 
 	app.get("*", (req, res) => {

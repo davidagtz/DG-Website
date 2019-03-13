@@ -1,0 +1,15 @@
+extends super_template
+
+block head
+    link(rel="stylesheet" type="text/css" href="signin.css")
+
+block body
+    h1 Sign in
+    #signin
+        label(for="user") User:
+        br
+        input(type="text", name="user")
+        br
+        label(for="pwd") Password:
+        br
+        input(type="password", name="pwd")
