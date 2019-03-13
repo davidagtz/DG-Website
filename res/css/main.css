@@ -21,6 +21,8 @@ nav#top_container #logo h1 {
   margin-top: 22.5px;
   font-size: 20.25px;
   margin-right: 2.25px;
+  font-family: Ubuntu;
+  font-weight: bold;
 }
 nav#top_container ul {
   list-style-type: none;
@@ -29,13 +31,14 @@ nav#top_container ul {
   display: inline-block;
   white-space: nowrap;
   vertical-align: top;
+  overflow: hidden;
 }
-nav#top_container ul a {
+nav#top_container ul li {
   margin: 0;
   padding: 0;
   display: inline-block;
 }
-nav#top_container ul a li {
+nav#top_container ul li a {
   height: 30px;
   margin: 0;
   display: inline-block;
@@ -44,11 +47,15 @@ nav#top_container ul a li {
   text-align: center;
   line-height: 30px;
   vertical-align: top;
+  text-decoration: none;
 }
-nav#top_container ul a li img {
+nav#top_container ul li a img {
   height: inherit;
 }
-nav#top_container ul a .separator {
+nav#top_container ul li .dropdown {
+  display: none;
+}
+nav#top_container ul li .separator {
   width: 1px;
   display: inline-block;
   background-color: #777;
@@ -56,10 +63,32 @@ nav#top_container ul a .separator {
   height: 24px;
   vertical-align: top;
 }
-nav#top_container ul a:hover {
+nav#top_container ul li .h_seperator {
+  height: 1px;
+  display: block;
+  background-color: #777;
+  width: inherit;
+}
+nav#top_container ul li:hover {
   background-color: #30302f;
 }
-nav#top_container ul a:first-child {
+nav#top_container ul li:hover .dropdown {
+  background-color: #131313;
+  display: block;
+  position: absolute;
+  padding: 0;
+}
+nav#top_container ul li:hover .dropdown li {
+  display: block;
+  margin: 0;
+}
+nav#top_container ul li:hover .dropdown li a {
+  margin: 0;
+  padding: 10px;
+  display: block;
+  text-align: left;
+}
+nav#top_container ul li:first-child {
   margin-left: 10px;
 }
 

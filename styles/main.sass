@@ -21,6 +21,8 @@ nav#top_container
             margin-top: $logo_height * .5
             font-size: $logo_height * .45
             margin-right: $logo_height * .05
+            font-family: Ubuntu
+            font-weight: bold
     ul
         list-style-type: none
         padding: 0
@@ -28,11 +30,12 @@ nav#top_container
         display: inline-block
         white-space: nowrap
         vertical-align: top
-        a
+        overflow: hidden
+        li
             margin: 0
             padding: 0
             display: inline-block
-            li
+            a
                 height: $nav_height 
                 margin: 0
                 display: inline-block
@@ -41,8 +44,11 @@ nav#top_container
                 text-align: center
                 line-height: $nav_height
                 vertical-align: top
+                text-decoration: none
                 img
                     height: inherit
+            .dropdown
+                display: none
             .separator
                 width: 1px
                 display: inline-block
@@ -50,10 +56,28 @@ nav#top_container
                 margin-top: $nav_height * .1 + $li_pad
                 height: $nav_height * .8
                 vertical-align: top
+            .h_seperator
+                height: 1px
+                display: block
+                background-color: #777
+                width: inherit
             &:hover
                 background-color: #30302f
+                .dropdown
+                    background-color: #131313
+                    display: block
+                    position: absolute
+                    padding: 0
+                    li
+                        display: block
+                        margin: 0
+                        a
+                            margin: 0
+                            padding: 2 * $li_pad
+                            display: block
+                            text-align: left
             &:first-child
-                margin-left: 2* $li_pad
+                margin-left: 2 * $li_pad
 
 #main_body
     $mr: 5%
