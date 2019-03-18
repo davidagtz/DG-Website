@@ -1,0 +1,30 @@
+extends super_template
+
+block head
+    script(src="/js/signup.js")
+
+block body
+    h1 Sign Up
+    .marg5
+        form(action='/signup' method='post')#signup
+            label(for="user") Username:
+            br
+            input(type="text", name="user" required)
+            br
+            br
+            label(for="pwd") Password:
+            br
+            input(type="password", name="pwd" required)
+            br
+            br
+            label(for="cpwd") Confirm Password:
+            br
+            input(type="password" required)
+            br
+            br
+            label(for="email") Email:
+            br
+            input(type="email", name="email" required)
+            br
+            br
+            button(onclick="validate_and_submit('signup');" type='button') Sign Up

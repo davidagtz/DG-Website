@@ -7,7 +7,7 @@
 6 silly lifecycle davidthedev@0.0.1~prestart: no script for prestart, continuing
 7 info lifecycle davidthedev@0.0.1~start: davidthedev@0.0.1
 8 verbose lifecycle davidthedev@0.0.1~start: unsafe-perm in lifecycle true
-9 verbose lifecycle davidthedev@0.0.1~start: PATH: /usr/share/npm/bin/node-gyp-bin:/home/davidagtz/Documents/DevWebsite/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+9 verbose lifecycle davidthedev@0.0.1~start: PATH: /usr/share/npm/bin/node-gyp-bin:/home/davidagtz/Documents/DevWebsite/node_modules/.bin:/home/davidagtz/.yarn/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 10 verbose lifecycle davidthedev@0.0.1~start: CWD: /home/davidagtz/Documents/DevWebsite
 11 silly lifecycle davidthedev@0.0.1~start: Args: [ '-c', 'node index.js' ]
 12 silly lifecycle davidthedev@0.0.1~start: Returned: code: 1  signal: null

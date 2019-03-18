@@ -104,3 +104,14 @@ nav#top_container ul li:first-child {
   text-align: center;
   color: #555;
 }
+
+.marg5 {
+  margin-left: 5%;
+}
+
+button {
+  background-color: #BBB;
+  border: none;
+  padding: 5px;
+  width: 7em;
+}

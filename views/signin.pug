@@ -1,15 +1,22 @@
 extends super_template
 
-block head
-    link(rel="stylesheet" type="text/css" href="signin.css")
-
 block body
     h1 Sign in
-    #signin
-        label(for="user") User:
-        br
-        input(type="text", name="user")
-        br
-        label(for="pwd") Password:
-        br
-        input(type="password", name="pwd")
+    #signin.marg5
+        - if(error)
+            p(style="color:red") #{error}
+        form(action="/signin" method="post")
+            label(for="user") User:
+            br
+            input(type="text", name="user")
+            br
+            br
+            label(for="pwd") Password:
+            br
+            input(type="password", name="pwd")
+            br
+            br
+            button(type="submit") Sign in
+            br
+            p Don't have an account? 
+                a(href="/signup") Sign Up

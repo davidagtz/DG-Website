@@ -1,0 +1,9 @@
+#signin {
+  margin-left: 5%;
+}
+#signin button {
+  background-color: #BBB;
+  border: none;
+  padding: 5px;
+  width: 7em;
+}
