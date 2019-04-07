@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "esnext",
+        "target": "ES2017",
         "lib": [
             "es2015",
             "dom",

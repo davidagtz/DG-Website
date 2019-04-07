@@ -1,11 +1,17 @@
+import * as fs from "fs";
+import * as express from "express";
+import * as session from "express-session";
+import * as sass from "sass";
+import * as pug from "pug";
+import { MongoClient } from "mongodb";
+import * as bcrypt from "bcrypt";
+
 // Get several paths
-const fs = require("fs");
 const res_path = __dirname + "/res"; // Folder for html files and such
 const views_path = __dirname + "/views"; // Folder for Pug templates
 const styles_path = __dirname + "/styles"; // Folder for Sass templates
 
 // Mongo Client
-import { MongoClient as MongoClient } from "mongodb";
 const config = JSON.parse(
 	fs.readFileSync("config.json", { encoding: "utf-8" })
 );
@@ -21,7 +27,6 @@ const db_url =
 console.log(db_url);
 
 // Compile Sass
-import * as sass from "sass";
 const sass_files = ["main", "aboutme", "projects"];
 sass_files.forEach(e => {
 	let result = sass.renderSync({
@@ -31,7 +36,6 @@ sass_files.forEach(e => {
 });
 
 // Get Pug template engine
-import * as pug from "pug"
 let default_views = {
 	index: pug.compileFile(views_path + "/index.pug")({}),
 	about_me: pug.compileFile(views_path + "/aboutme.pug")({}),
@@ -58,7 +62,6 @@ let default_views = {
 };
 
 // Express Declaration and Middleware
-import * as express from "express";
 let app = express();
 app.use("/", express.static(__dirname + "/res"));
 // Set template engine
@@ -74,26 +77,32 @@ app.use((req, res, next) => {
 	next();
 });
 // session
-const session = require('express-session');
-let MongoDBStore = require('connect-mongodb-session')(session);
+let MongoDBStore = require("connect-mongodb-session")(session);
 let store = new MongoDBStore({
 	uri: db_url,
 	databaseName: db_name,
 	collection: config.session.collection
 });
-app.set('trust proxy', 1); // trust first proxy
-app.use(session({
-	secret: config.session.secret,
-	resave: false,
-	saveUninitialized: true,
-	cookie: { secure: true },
-	store: store
-}));
+app.set("trust proxy", 1); // trust first proxy
+app.use(
+	session({
+		secret: config.session.secret,
+		resave: false,
+		saveUninitialized: true,
+		cookie: { secure: true },
+		store: store
+	})
+);
+interface Account {
+	user: string,
+	email: string,
+	pwd: string
+}
+
 // Body parser
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-import * as bcrypt from 'bcrypt';
 
 MongoClient.connect(db_url, { useNewUrlParser: true }, (err, client) => {
 	if (err) throw err;
@@ -139,32 +148,62 @@ MongoClient.connect(db_url, { useNewUrlParser: true }, (err, client) => {
 		res.render("signin", {});
 	});
 
-	app.post('/signin', async (req, res) => {
+	app.post("/signin", async (req, res) => {
 		// Check to see if there are the required fields
 		if (!req.body.user && !req.body.pwd) {
 			res.status(401);
-			res.render('signin', { error: "No given username or password" });
+			res.render("signin", { error: "No given username or password" });
 		}
 
 		// Find the account in question
 		let user_doc = await users.findOne({ user: req.body.user });
 		// Check if it exists
 		if (!user_doc) {
-			res.render('signin', { error: "Incorrect username or password" });
+			res.render("signin", { error: "Incorrect username or password" });
 			return;
 		}
 		// Get the hashed password and compare
 		const hash = user_doc.pwd;
 		if (await bcrypt.compare(req.body.pwd, hash)) {
-			await users.updateOne(user_doc, { $set: { session: req.session.sessionID } });
+			await users.updateOne(user_doc, {
+				$set: { session: req.session.sessionID }
+			});
 			res.render("signin", { error: "Login Successful" });
-		}
-		else
-			res.render('signin', { error: "Incorrect username or password" });
+		} else res.render("signin", { error: "Incorrect username or password" });
 	});
 
-	app.get('/signup', (req, res) => {
-		res.render('signup', {});
+	app.get("/signup", (req, res) => {
+		res.render("signup", {});
+	});
+
+	app.post("/signup", async (req, res) => {
+		if (!req.body.pwd)
+			return res.render('signup', { error: "No password given" });
+		if (!req.body.user)
+			return res.render('signup', { error: "No username given" });
+		if (!req.body.email)
+			return res.render('signup', { error: "No email given" });
+		try {
+			let exist = await users.findOne({ user: req.body.user });
+			if (exist)
+				return res.render('signup', { error: "Username taken" });
+			exist = await users.findOne({ email: req.body.email });
+			if (exist)
+				return res.render('signup', { error: "Email in use" });
+
+			let pwd = await bcrypt.hash(req.body.pwd, config.pwd.salt_rounds);
+			let ins: Account = {
+				user: req.body.user,
+				pwd: pwd,
+				email: req.body.email
+			};
+			await users.insertOne(ins);
+			res.render('signup', { error: "Signup successful" });
+		} catch (err) {
+			console.log(err);
+			res.status(500);
+			res.render('signup', { error: "There was a server error" });
+		}
 	});
 
 	app.get("/projects/add", (req, res) => {

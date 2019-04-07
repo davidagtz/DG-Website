@@ -36,13 +36,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 exports.__esModule = true;
-// Get several paths
 var fs = require("fs");
+var express = require("express");
+var session = require("express-session");
+var sass = require("sass");
+var pug = require("pug");
+var mongodb_1 = require("mongodb");
+var bcrypt = require("bcrypt");
+// Get several paths
 var res_path = __dirname + "/res"; // Folder for html files and such
 var views_path = __dirname + "/views"; // Folder for Pug templates
 var styles_path = __dirname + "/styles"; // Folder for Sass templates
 // Mongo Client
-var mongodb_1 = require("mongodb");
 var config = JSON.parse(fs.readFileSync("config.json", { encoding: "utf-8" }));
 var db_name = config.db;
 var db_url = "mongodb://" +
@@ -53,7 +58,6 @@ var db_url = "mongodb://" +
     db_name;
 console.log(db_url);
 // Compile Sass
-var sass = require("sass");
 var sass_files = ["main", "aboutme", "projects"];
 sass_files.forEach(function (e) {
     var result = sass.renderSync({
@@ -62,7 +66,6 @@ sass_files.forEach(function (e) {
     fs.writeFileSync(res_path + "/css/" + e + ".css", result.css);
 });
 // Get Pug template engine
-var pug = require("pug");
 var default_views = {
     index: pug.compileFile(views_path + "/index.pug")({}),
     about_me: pug.compileFile(views_path + "/aboutme.pug")({}),
@@ -86,7 +89,6 @@ var default_views = {
     signin: pug.compileFile(views_path + "/signin.pug", {})
 };
 // Express Declaration and Middleware
-var express = require("express");
 var app = express();
 app.use("/", express.static(__dirname + "/res"));
 // Set template engine
@@ -102,14 +104,13 @@ app.use(function (req, res, next) {
     next();
 });
 // session
-var session = require('express-session');
-var MongoDBStore = require('connect-mongodb-session')(session);
+var MongoDBStore = require("connect-mongodb-session")(session);
 var store = new MongoDBStore({
     uri: db_url,
     databaseName: db_name,
     collection: config.session.collection
 });
-app.set('trust proxy', 1); // trust first proxy
+app.set("trust proxy", 1); // trust first proxy
 app.use(session({
     secret: config.session.secret,
     resave: false,
@@ -118,10 +119,9 @@ app.use(session({
     store: store
 }));
 // Body parser
-var bodyParser = require('body-parser');
+var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-var bcrypt = require("bcrypt");
 mongodb_1.MongoClient.connect(db_url, { useNewUrlParser: true }, function (err, client) {
     if (err)
         throw err;
@@ -159,7 +159,7 @@ mongodb_1.MongoClient.connect(db_url, { useNewUrlParser: true }, function (err, 
     app.get("/signin", function (req, res) {
         res.render("signin", {});
     });
-    app.post('/signin', function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+    app.post("/signin", function (req, res) { return __awaiter(_this, void 0, void 0, function () {
         var user_doc, hash;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -167,35 +167,84 @@ mongodb_1.MongoClient.connect(db_url, { useNewUrlParser: true }, function (err, 
                     // Check to see if there are the required fields
                     if (!req.body.user && !req.body.pwd) {
                         res.status(401);
-                        res.render('signin', { error: "No given username or password" });
+                        res.render("signin", { error: "No given username or password" });
                     }
                     return [4 /*yield*/, users.findOne({ user: req.body.user })];
                 case 1:
                     user_doc = _a.sent();
                     // Check if it exists
                     if (!user_doc) {
-                        res.render('signin', { error: "Incorrect username or password" });
+                        res.render("signin", { error: "Incorrect username or password" });
                         return [2 /*return*/];
                     }
                     hash = user_doc.pwd;
                     return [4 /*yield*/, bcrypt.compare(req.body.pwd, hash)];
                 case 2:
                     if (!_a.sent()) return [3 /*break*/, 4];
-                    return [4 /*yield*/, users.updateOne(user_doc, { $set: { session: req.session.sessionID } })];
+                    return [4 /*yield*/, users.updateOne(user_doc, {
+                            $set: { session: req.session.sessionID }
+                        })];
                 case 3:
                     _a.sent();
                     res.render("signin", { error: "Login Successful" });
                     return [3 /*break*/, 5];
                 case 4:
-                    res.render('signin', { error: "Incorrect username or password" });
+                    res.render("signin", { error: "Incorrect username or password" });
                     _a.label = 5;
                 case 5: return [2 /*return*/];
             }
         });
     }); });
-    app.get('/signup', function (req, res) {
-        res.render('signup', {});
+    app.get("/signup", function (req, res) {
+        res.render("signup", {});
     });
+    app.post("/signup", function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+        var exist, pwd, ins, err_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (!req.body.pwd)
+                        return [2 /*return*/, res.render('signup', { error: "No password given" })];
+                    if (!req.body.user)
+                        return [2 /*return*/, res.render('signup', { error: "No username given" })];
+                    if (!req.body.email)
+                        return [2 /*return*/, res.render('signup', { error: "No email given" })];
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 6, , 7]);
+                    return [4 /*yield*/, users.findOne({ user: req.body.user })];
+                case 2:
+                    exist = _a.sent();
+                    if (exist)
+                        return [2 /*return*/, res.render('signup', { error: "Username taken" })];
+                    return [4 /*yield*/, users.findOne({ email: req.body.email })];
+                case 3:
+                    exist = _a.sent();
+                    if (exist)
+                        return [2 /*return*/, res.render('signup', { error: "Email in use" })];
+                    return [4 /*yield*/, bcrypt.hash(req.body.pwd, config.pwd.salt_rounds)];
+                case 4:
+                    pwd = _a.sent();
+                    ins = {
+                        user: req.body.user,
+                        pwd: pwd,
+                        email: req.body.email
+                    };
+                    return [4 /*yield*/, users.insertOne(ins)];
+                case 5:
+                    _a.sent();
+                    res.render('signup', { error: "Signup successful" });
+                    return [3 /*break*/, 7];
+                case 6:
+                    err_1 = _a.sent();
+                    console.log(err_1);
+                    res.status(500);
+                    res.render('signup', { error: "There was a server error" });
+                    return [3 /*break*/, 7];
+                case 7: return [2 /*return*/];
+            }
+        });
+    }); });
     app.get("/projects/add", function (req, res) {
         res.redirect("/signin");
     });

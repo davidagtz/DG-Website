@@ -6,6 +6,8 @@ block head
 block body
     h1 Sign Up
     .marg5
+        - if(error)
+                p(style="color:red") #{error}
         form(action='/signup' method='post')#signup
             label(for="user") Username:
             br
@@ -13,7 +15,7 @@ block body
             br
             br
             label(for="pwd") Password:
-            br
+            p#pc(style="color:#f00")
             input(type="password", name="pwd" required)
             br
             br
