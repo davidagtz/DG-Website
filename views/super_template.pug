@@ -47,6 +47,12 @@ html(lang="en")
                 li
                     a(href="https://github.com/davidagtz/DG-Website" alt="Link to my GitHub")
                         img(src="/imgs/github.png")
+                    .separator
+                li
+                    - if(account)
+                        a(href="/account") #{account.user}
+                    - else
+                        a(href="/account/signin") Sign in
         #main_body
             block body
         #footer

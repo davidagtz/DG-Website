@@ -8,7 +8,7 @@ block body
     .marg5
         - if(error)
                 p(style="color:red") #{error}
-        form(action='/signup' method='post')#signup
+        form(action='/account/signup' method='post')#signup
             label(for="user") Username:
             br
             input(type="text", name="user" required)

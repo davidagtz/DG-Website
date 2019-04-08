@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "build": "tsc index.ts"
+    "start": "node build/index.js",
+    "build": "tsc",
+    "run": "yarn build && yarn start"
   },
   "author": "David Gutierrez",
   "license": "ISC",

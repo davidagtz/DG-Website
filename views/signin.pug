@@ -5,7 +5,7 @@ block body
     #signin.marg5
         - if(error)
             p(style="color:red") #{error}
-        form(action="/signin" method="post")
+        form(action="/account/signin" method="post")
             label(for="user") User:
             br
             input(type="text", name="user")
@@ -19,4 +19,4 @@ block body
             button(type="submit") Sign in
             br
             p Don't have an account? 
-                a(href="/signup") Sign Up
+                a(href="/account/signup") Sign Up

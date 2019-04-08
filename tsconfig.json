@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "ES2017",
+        "target": "ES3",
         "lib": [
             "es2015",
             "dom",
@@ -14,6 +14,16 @@
             "sass",
             "mongodb",
             "bcrypt"
-        ]
-    }
+        ],
+        "outDir": "./build"
+    },
+    "files": [
+        "index.ts"
+    ],
+    "include": [
+        "routes/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }
